@@ -18,9 +18,9 @@ Quote this work and link if you are using it in your projects or research.
 reach out at imadahmad104@yahoo.com if you are facing any difficulty with available code at any point and project and startups collaboration.
 
 
-Follow me on
-  Twitter:   @IT_DataGuru
-  Facebook:  facebook.com/imad.ahmad.7
-  FB Page:   facebook.com/imadahmadpak/
-  Telegram:  @imad_techmaster
-  Instagram: imad_ict 
+## Follow me on
+  * Twitter:   @IT_DataGuru
+  * Facebook:  facebook.com/imad.ahmad.7
+  * FB Page:   facebook.com/imadahmadpak/
+  * Telegram:  @imad_techmaster
+  * Instagram: imad_ict 
