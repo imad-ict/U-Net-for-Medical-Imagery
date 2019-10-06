@@ -8,3 +8,7 @@ Create 'image' and 'label' folders inside test and train folders.
 Place your images in image folder and masks of images in label folder.
 Make sure the image and label data is of 32 multiple resolution to ensure the compatibility. 
 i.e 64x64, 96X96,128X128,256X256 etc
+I have trained the Brain Mri data set on the model and the results were admirable. You can use your own dataset for it.
+
+
+Quote this work and link if you are using it in your projects or research.
