@@ -15,17 +15,16 @@ class dataProcess(object):
         self.npy_path = npy_path
 
     def create_train_data(self):
-        i = 0
         print('Creating training images...')
-        imgs = glob.glob(self.data_path+"/*."+self.img_type)
+        imgs = glob.glob(f"{self.data_path}/*.{self.img_type}")
         print(len(imgs))
         imgdatas = np.ndarray((len(imgs), self.out_rows, self.out_cols, 3), dtype=np.uint8)
         imglabels = np.ndarray((len(imgs), self.out_rows, self.out_cols, 1), dtype=np.uint8)
 
-        for x in range(len(imgs)):
+        for i, x in enumerate(range(len(imgs))):
             imgpath = imgs[x]
             pic_name = imgpath.split('/')[-1]
-            labelpath = self.label_path + '/' + pic_name
+            labelpath = f'{self.label_path}/{pic_name}'
             img = load_img(imgpath, grayscale=False, target_size=[512, 512])
             label = load_img(labelpath, grayscale=True, target_size=[512, 512])
             img = img_to_array(img)
@@ -34,53 +33,48 @@ class dataProcess(object):
             imglabels[i] = label
             if i % 100 == 0:
                 print('Done:', len(imgs),' images')
-            i += 1
-
         print('loading done')
-        np.save(self.npy_path + '/imgs_train.npy', imgdatas)
-        np.save(self.npy_path + '/imgs_mask_train.npy', imglabels)
+        np.save(f'{self.npy_path}/imgs_train.npy', imgdatas)
+        np.save(f'{self.npy_path}/imgs_mask_train.npy', imglabels)
         print('Saving to .npy files done.')
 
     def create_test_data(self):
-        i = 0
         print('Creating test images...')
-        imgs = glob.glob(self.test_path + "/*." + self.img_type)
+        imgs = glob.glob(f"{self.test_path}/*.{self.img_type}")
         imgdatas = np.ndarray((len(imgs), self.out_rows, self.out_cols, 3), dtype=np.uint8)
         testpathlist = []
 
-        for imgname in imgs:
+        for i, imgname in enumerate(imgs):
             testpath = imgname
             testpathlist.append(testpath)
             img = load_img(testpath, grayscale=False, target_size=[512, 512])
             img = img_to_array(img)
             imgdatas[i] = img
-            i += 1
-
         txtname = './data/results/pic.txt'
         with open(txtname, 'w') as f:
-            for i in range(len(testpathlist)):
-                f.writelines(testpathlist[i] + '\n')
+            for item in testpathlist:
+                f.writelines(item + '\n')
         print('loading done')
-        np.save(self.npy_path + '/imgs_test.npy', imgdatas)
+        np.save(f'{self.npy_path}/imgs_test.npy', imgdatas)
         print('Saving to imgs_test.npy files done.')
 
     def load_train_data(self):
         print('load train images...')
-        imgs_train = np.load(self.npy_path + "/imgs_train.npy")
-        imgs_mask_train = np.load(self.npy_path + "/imgs_mask_train.npy")
+        imgs_train = np.load(f"{self.npy_path}/imgs_train.npy")
+        imgs_mask_train = np.load(f"{self.npy_path}/imgs_mask_train.npy")
         imgs_train = imgs_train.astype('float32')
         imgs_mask_train = imgs_mask_train.astype('float32')
         imgs_train /= 255
         imgs_mask_train /= 255
-        imgs_mask_train[imgs_mask_train > 0.5] = 1  
-        imgs_mask_train[imgs_mask_train <= 0.5] = 0 
+        imgs_mask_train[imgs_mask_train > 0.5] = 1
+        imgs_mask_train[imgs_mask_train <= 0.5] = 0
         return imgs_train, imgs_mask_train
 
     def load_test_data(self):
         print('-' * 30)
         print('load test images...')
         print('-' * 30)
-        imgs_test = np.load(self.npy_path + "/imgs_test.npy")
+        imgs_test = np.load(f"{self.npy_path}/imgs_test.npy")
         imgs_test = imgs_test.astype('float32')
         imgs_test /= 255
         return imgs_test
